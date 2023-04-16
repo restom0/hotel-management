@@ -12,25 +12,25 @@ public class Home {
         createHomeUI();
     }
     private void createHomeUI() {
-        frame = new JFrame("Holtel Manager");
+        frame = new JFrame("Hotel Manager - Home");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
+        //GridBagConstraints constraints = new GridBagConstraints();
         
-        JButton addButton_Book_Room = new JButton("Đặt phòng");
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        addButton_Book_Room.setPreferredSize(new Dimension(200, 30));
-        panel.add(addButton_Book_Room, constraints);
+        // JButton addButton_Book_Room = new JButton("Đặt phòng");
+        // constraints.gridx = 0;
+        // constraints.gridy = 3;
+        // addButton_Book_Room.setPreferredSize(new Dimension(200, 30));
+        // panel.add(addButton_Book_Room, constraints);
 
 
 
-        JButton addButton_History = new JButton("Lịch sử giao dịch");
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        addButton_History.setPreferredSize(new Dimension(200, 30));
-        panel.add(addButton_History, constraints);
+        // JButton addButton_History = new JButton("Lịch sử giao dịch");
+        // constraints.gridx = 0;
+        // constraints.gridy = 4;
+        // addButton_History.setPreferredSize(new Dimension(200, 30));
+        // panel.add(addButton_History, constraints);
         
         
         //JScrollPane scrollPane = new JScrollPane(table);
