@@ -57,10 +57,10 @@ public class LoginUI {
         frame.add(panel, BorderLayout.CENTER);
         //frame.add(scrollPane, BorderLayout.CENTER);
 
-        frame.setMinimumSize(new Dimension(1024, 768));
-        frame.setMaximumSize(new Dimension(1024, 768));
+        frame.setSize(new Dimension(800, 600));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
     }
     public void refresh() {
         //model.setRowCount(0);
