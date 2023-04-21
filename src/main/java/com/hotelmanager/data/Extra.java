@@ -1,4 +1,4 @@
-package com.hotelmanager;
+package com.hotelmanager.data;
 
 public class Extra {
     private String name;
