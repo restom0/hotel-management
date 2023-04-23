@@ -11,7 +11,7 @@ public class LoginUI {
         createLoginUI();
     }
     private void createLoginUI() {
-        frame = new JFrame("Hotel Manager");
+        frame = new JFrame("Holtel Manager");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel panel = new JPanel(new GridBagLayout());
