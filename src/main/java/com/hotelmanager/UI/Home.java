@@ -1,5 +1,4 @@
 package com.hotelmanager.UI;
-
 import java.awt.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -12,7 +11,6 @@ public class Home {
     private JFrame frame;
     //private JTable table;
     //private DefaultTableModel model;
-
     public Home() {
         createHomeUI();
     }
@@ -44,7 +42,7 @@ public class Home {
         userNameLabel.setVerticalAlignment(JLabel.CENTER);
         top_NORTHpanel_Right.add(userNameLabel);
 
-        ImageIcon logOutButton_icon = new ImageIcon("logOut_icon.png");
+        ImageIcon logOutButton_icon = new ImageIcon("src/main/resources/logOut_icon.png");
         JButton logOutButton = new JButton("LogOut", logOutButton_icon);
         logOutButton.setPreferredSize(new Dimension(102, 20));
         logOutButton.setContentAreaFilled(false);
@@ -101,7 +99,7 @@ public class Home {
         propertybButton.setContentAreaFilled(false);
         propertybButton.setFocusPainted(false);
 
-        ImageIcon logButton_icon = new ImageIcon("log_icon.png");
+        ImageIcon logButton_icon = new ImageIcon("src/main/resources/log_icon.png");
         JButton logButton = new JButton("Log",logButton_icon);
         logButton.setContentAreaFilled(false);
         logButton.setFocusPainted(false);
@@ -121,7 +119,7 @@ public class Home {
         
         frame.add(contentPanel, BorderLayout.CENTER);
 
-        bookButton.addActionListener(new ActionListener() {
+        ActionListener bookButtonActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
@@ -346,8 +344,6 @@ public class Home {
                 SOUTHpanel.add(bookPanel,BorderLayout.CENTER);
                 contentPanel.add(SOUTHpanel, BorderLayout.CENTER);
 
-                //final JPanel SOUTHpanelCopy = SOUTHpanel;
-
                 cancelBookPanelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -363,6 +359,7 @@ public class Home {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Lấy dữ liệu ở đây 
+
                         contentPanel.remove(SOUTHpanel);
                         SOUTHpanel.removeAll();
                         contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
@@ -377,6 +374,392 @@ public class Home {
                 frame.revalidate(); // Cập nhật lại giao diện
                 frame.repaint();
             }
+        };
+        bookButton.addActionListener(bookButtonActionListener);
+        ediButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                contentPanel.remove(SOUTHpanel);
+                SOUTHpanel.removeAll();
+
+                JPanel editPanel = new JPanel(new BorderLayout());
+                JPanel NORTHdeitPanel = new JPanel(new BorderLayout());
+                JPanel SOUTHeditPanel = new JPanel(new GridLayout(1,2));
+                SOUTHeditPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                JPanel SOUTH_left_editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                JPanel SOUTH_right_editPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+                String[] columnsEdit = {"ID", "Customer Name", "Room", "Checkin Date"};
+                Object[][] dataEdit = {
+                    {1, "John", 25, "11"},
+                    {2, "Sarah", 30,"12"},
+                    {3, "Tom", 20,"13"}
+                };
+                DefaultTableModel modelEdit =  new DefaultTableModel(dataEdit, columnsEdit);
+                
+                JTable tableEdit = new JTable(modelEdit);
+                tableEdit.setDefaultEditor(Object.class, null);
+                tableEdit.getTableHeader().setReorderingAllowed(false);
+                tableEdit.setRowSelectionAllowed(true);
+                tableEdit.setColumnSelectionAllowed(false);
+
+                JScrollPane scrollPaneEdit = new JScrollPane(tableEdit);
+                scrollPaneEdit.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+
+                JButton editEditButton = new JButton("Edit");
+                JButton cancelEditButton = new JButton("Cancel");
+
+                NORTHdeitPanel.add(scrollPaneEdit,BorderLayout.NORTH);
+                SOUTH_right_editPanel.add(editEditButton);
+                SOUTH_left_editPanel.add(cancelEditButton);
+                SOUTHeditPanel.add(SOUTH_left_editPanel);
+                SOUTHeditPanel.add(SOUTH_right_editPanel);
+                editPanel.add(NORTHdeitPanel,BorderLayout.CENTER);
+                editPanel.add(SOUTHeditPanel,BorderLayout.SOUTH);
+                SOUTHpanel.add(editPanel, BorderLayout.CENTER);
+                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+
+                cancelEditButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        contentPanel.remove(SOUTHpanel);
+                        SOUTHpanel.removeAll();
+
+                        contentPanel.add(SOUTHpanel);
+                        contentPanel.revalidate();
+                        contentPanel.repaint();
+
+                    }
+                });
+
+                editEditButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int rowtableEdit = tableEdit.getSelectedRow();
+                        if (rowtableEdit == -1) {
+                            JOptionPane.showMessageDialog(null, "Please select 1 item");
+                            return;
+                        }
+
+                        frame.getContentPane().removeAll();
+                        contentPanel.remove(SOUTHpanel);
+                        SOUTHpanel.removeAll();
+
+                        JPanel bookJPanel_Footer = new JPanel(new GridLayout(1, 2));
+        
+                        JPanel bookJPanel_Footer_Left = new JPanel (new FlowLayout(FlowLayout.LEFT));
+                        JButton cancelBookPanelButton = new JButton("Back");
+        
+                        bookJPanel_Footer_Left.add(cancelBookPanelButton);
+                        bookJPanel_Footer.add(bookJPanel_Footer_Left);
+        
+                        JButton finishBookPanelButton = new JButton("Finish");
+                        JPanel bookJPanel_Footer_Right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                        bookJPanel_Footer_Right.add(finishBookPanelButton);
+                        bookJPanel_Footer.add(bookJPanel_Footer_Right);
+        
+        
+                        JPanel bookPanel_left = new JPanel(new BorderLayout());
+        
+                        JPanel bookPanel_left_top = new JPanel(new GridBagLayout());
+                        GridBagConstraints constraints = new GridBagConstraints();
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 0;
+                        bookPanel_left_top.add(new Label(), constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 1;
+                        constraints.fill = GridBagConstraints.HORIZONTAL;
+                        JLabel customerInfoLabel = new JLabel("Customer Information");
+                        customerInfoLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                        bookPanel_left_top.add(customerInfoLabel, constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 2;
+                        constraints.insets = new Insets(15, 0, 0, 0);
+                        bookPanel_left_top.add(new JLabel("Name"), constraints);
+        
+                        JTextField customerNameField = new JTextField(20);
+                        customerNameField.setText(modelEdit.getValueAt(rowtableEdit, 1).toString());
+                        constraints.gridx = 1;
+                        constraints.gridy = 2;
+                        bookPanel_left_top.add(customerNameField, constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 3;
+                        bookPanel_left_top.add(new JLabel("Phone Number"), constraints);
+
+        
+                        JTextField phoneNumberField = new JTextField(20);
+                        //Phần lấy số đth từ BE
+                        phoneNumberField.setText("Số điện thoại");
+                        constraints.gridx = 1;
+                        constraints.gridy = 3;
+                        bookPanel_left_top.add(phoneNumberField, constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 4;
+                        bookPanel_left_top.add(new JLabel("ID"), constraints);
+        
+                        JTextField IDField = new JTextField(20);
+                        IDField.setText(modelEdit.getValueAt(rowtableEdit, 0).toString());
+                        constraints.gridx = 1;
+                        constraints.gridy = 4;
+                        bookPanel_left_top.add(IDField, constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 5;
+                        bookPanel_left_top.add(new JLabel("Room"), constraints);
+        
+                        JTextField roomField = new JTextField(20);
+                        roomField.setText(modelEdit.getValueAt(rowtableEdit, 2).toString());
+                        constraints.gridx = 1;
+                        constraints.gridy = 5;
+                        bookPanel_left_top.add(roomField, constraints);
+        
+                        constraints.gridx = 0;
+                        constraints.gridy = 6;
+                        bookPanel_left_top.add(new JLabel("Extras"), constraints);
+        
+                        JButton addMoreButton = new JButton("Add..");
+                        addMoreButton.setBorderPainted(false);
+                        addMoreButton.setContentAreaFilled(false);
+                        addMoreButton.setFocusPainted(false);
+                        addMoreButton.setOpaque(false);
+                        addMoreButton.setFont(addMoreButton.getFont().deriveFont(Font.PLAIN));
+                        addMoreButton.setForeground(Color.BLUE);
+                        addMoreButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                        addMoreButton.setHorizontalTextPosition(SwingConstants.CENTER);
+                        addMoreButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+                        
+                        addMoreButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JDialog subFrame_addMore = new JDialog(frame, "Add", true);
+                                subFrame_addMore.setSize(300, 300);
+                                subFrame_addMore.setLocationRelativeTo(null);
+        
+                                JPanel contentPanel_addMore = new JPanel(new BorderLayout());
+                                
+                                JPanel contentPanel_addMore_Main = new JPanel(new GridLayout(0,2));
+                                GridBagConstraints constraints = new GridBagConstraints();
+        
+                                constraints.gridx = 0;
+                                constraints.gridy = 0;
+                                constraints.fill = GridBagConstraints.HORIZONTAL;
+                                JLabel Type_addMore = new JLabel("Type:");
+                                contentPanel_addMore_Main.add(Type_addMore, constraints);
+        
+                                constraints.gridx = 0;
+                                constraints.gridy = 1;
+                                String[] options_Type_addMore = {"Option 1", "Option 2", "Option 3"};
+                                JComboBox<String> dropdown_Type_addMore = new JComboBox<>(options_Type_addMore);
+        
+                                contentPanel_addMore_Main.add(dropdown_Type_addMore, constraints);
+        
+                                constraints.gridx = 0;
+                                constraints.gridy = 2;
+                                contentPanel_addMore_Main.add(new Label(), constraints);
+                                constraints.gridx = 0;
+                                constraints.gridy = 3;
+                                contentPanel_addMore_Main.add(new Label(), constraints);
+        
+                                constraints.gridx = 0;
+                                constraints.gridy = 4;
+                                JLabel quantity_addMore = new JLabel("Quantity:");
+                                contentPanel_addMore_Main.add(quantity_addMore, constraints);
+        
+                                constraints.gridx = 1;
+                                constraints.gridy = 4;
+                                JTextField quantity_addMoreField = new JTextField(10);
+                                contentPanel_addMore_Main.add(quantity_addMoreField, constraints);
+        
+                                JPanel contentPanel_addMore_Footer = new JPanel(new GridLayout(1, 2));
+                                contentPanel_addMore_Footer.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+        
+        
+                                JPanel contentPanel_addMore_Footer_Left = new JPanel (new FlowLayout(FlowLayout.LEFT));
+                                
+                                JButton cancel_contentPanel_addMoreButton = new JButton("Cancel");
+                                contentPanel_addMore_Footer_Left.add(cancel_contentPanel_addMoreButton);
+                                contentPanel_addMore_Footer.add(contentPanel_addMore_Footer_Left);
+        
+                                cancel_contentPanel_addMoreButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        subFrame_addMore.setVisible(false);
+                                    }
+                                });
+        
+                                JButton finish_contentPanel_addMoreButton = new JButton("Finish");
+                                finish_contentPanel_addMoreButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        //Cập nhật dữ liệu tại đây
+                                        JOptionPane.showMessageDialog(frame, "??? added successfully!");
+                                        subFrame_addMore.setVisible(false);
+                                    }
+                                });
+        
+                                JPanel contentPanel_addMore_Footer_Right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                                contentPanel_addMore_Footer_Right.add(finish_contentPanel_addMoreButton);
+                                contentPanel_addMore_Footer.add(contentPanel_addMore_Footer_Right);
+        
+                                contentPanel_addMore.add(contentPanel_addMore_Main,BorderLayout.NORTH);
+                                contentPanel_addMore.add(contentPanel_addMore_Footer, BorderLayout.SOUTH);
+        
+                                subFrame_addMore.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                subFrame_addMore.getContentPane().add(contentPanel_addMore);
+                                subFrame_addMore.setVisible(true);
+                            }
+                        }
+                        );
+                        
+                        JPanel addMorePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                        constraints.gridx = 1;
+                        constraints.gridy = 6;
+                        addMorePanel.add(addMoreButton);
+                        bookPanel_left_top.add(addMorePanel, constraints);
+        
+                        Object[] columnNames_dataExtras = {"Type", "Name", "Price"};
+                        Object[][] dataExtras = {
+                                {"Single", "101", "200 000"},
+                                {"Double", "221", "300 000"},
+                                {"Single", "217", "150 000"},
+                                {"Single", "602", "180 000"},
+                                {"Double", "779", "350 000"}
+                        };
+        
+                        DefaultTableModel model_dataExtras = new DefaultTableModel(dataExtras, columnNames_dataExtras);
+                        JTable table_dataExtras = new JTable(model_dataExtras);
+                        table_dataExtras.setEnabled(false);
+        
+                        JScrollPane bookPanel_left_bot = new JScrollPane(table_dataExtras);
+                        bookPanel_left_bot.setBackground(Color.LIGHT_GRAY);
+                        table_dataExtras.setFillsViewportHeight(false);
+                        
+                        bookPanel_left.add(bookPanel_left_top,BorderLayout.NORTH);
+                        bookPanel_left.add(bookPanel_left_bot,BorderLayout.CENTER);
+                        //Create bookPanel_right
+                        Object[] columnNames_dataRoomAlb = {"Type", "Name", "Price"};
+                        Object[][] dataRoomAlb = {
+                                {"Single", "101", "200 000"},
+                                {"Double", "221", "300 000"},
+                                {"Single", "217", "150 000"},
+                                {"Single", "602", "180 000"},
+                                {"Double", "779", "350 000"}
+                        };
+        
+                        DefaultTableModel model_dataRoomAlb = new DefaultTableModel(dataRoomAlb, columnNames_dataRoomAlb);
+                        JTable table_dataRoomAlb = new JTable(model_dataRoomAlb);
+                        table_dataRoomAlb.setEnabled(false);
+        
+                        JScrollPane bookPanel_right = new JScrollPane(table_dataRoomAlb);
+                        table_dataRoomAlb.setFillsViewportHeight(true);
+                        
+                        JSplitPane bookPanel_Main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bookPanel_left, bookPanel_right);
+                        bookPanel_Main.setOneTouchExpandable(true);
+                        bookPanel_Main.setDividerLocation(frame.getWidth() / 2);
+        
+                        JPanel bookPanel = new JPanel(new BorderLayout());
+                        bookPanel.add(bookJPanel_Footer,BorderLayout.SOUTH);
+                        bookPanel.add(bookPanel_Main,BorderLayout.CENTER);
+        
+                        SOUTHpanel.add(bookPanel,BorderLayout.CENTER);
+                        contentPanel.add(SOUTHpanel, BorderLayout.CENTER);
+        
+                        //final JPanel SOUTHpanelCopy = SOUTHpanel;
+        
+                        cancelBookPanelButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                contentPanel.remove(SOUTHpanel);
+                                SOUTHpanel.removeAll();
+                                SOUTHpanel.add(editPanel);
+
+                                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+                                
+                                contentPanel.revalidate();
+                                contentPanel.repaint();
+                            }
+                        });
+                        finishBookPanelButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                // Lấy dữ liệu ở đây 
+                                contentPanel.remove(SOUTHpanel);
+                                SOUTHpanel.removeAll();
+                                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+                                
+                                JOptionPane.showMessageDialog(frame, "Customer edit successfully!");
+                                contentPanel.revalidate();
+                                contentPanel.repaint();
+                            }
+                        });
+        
+                        frame.add(contentPanel,BorderLayout.CENTER);
+                        frame.revalidate(); // Cập nhật lại giao diện
+                        frame.repaint();
+                    }
+                });
+
+                frame.add(contentPanel,BorderLayout.CENTER);
+                frame.revalidate(); // Cập nhật lại giao diện
+                frame.repaint();
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                contentPanel.remove(SOUTHpanel);
+                SOUTHpanel.removeAll();
+
+                JPanel searchPanel = new JPanel(new BorderLayout());
+                JPanel searchJPanel_Footer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                searchJPanel_Footer.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+
+                JPanel searchPanel_Top = new JPanel(new FlowLayout());
+                JPanel searchPanel_Main = new JPanel(new BorderLayout());
+                
+                JButton cancelSearchButton = new JButton("Cancel");
+                searchJPanel_Footer.add(cancelSearchButton);
+                
+
+                JLabel searchJLabel = new JLabel("Search:");
+                JTextField searchField = new JTextField(20);
+                String[] options_Type_search = {"Option 1", "Option 2", "Option 3"};
+                JComboBox<String> dropdown_Type_search = new JComboBox<>(options_Type_search);
+                searchField.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        String query = searchField.getText();
+                        
+                    }
+                });
+            
+                searchPanel_Top.add(searchJLabel);
+                searchPanel_Top.add(searchField);
+                searchPanel_Top.add(dropdown_Type_search);
+
+                searchPanel.add(searchJPanel_Footer, BorderLayout.SOUTH);
+                searchPanel.add(searchPanel_Main, BorderLayout.CENTER);
+                searchPanel.add(searchPanel_Top, BorderLayout.NORTH);
+
+                SOUTHpanel.add(searchPanel,BorderLayout.CENTER);
+                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+                //JScrollPane scrollPaneSearch = new JScrollPane();
+                //scrollPaneEdit.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+                contentPanel.revalidate();
+                contentPanel.repaint();
+                frame.add(contentPanel,BorderLayout.CENTER);
+                frame.revalidate(); // Cập nhật lại giao diện
+                frame.repaint();
+            }
         });
         showFrame();
     }
@@ -384,6 +767,7 @@ public class Home {
     public void setHome (JFrame temp) {
         frame = temp;
     }
+
     public JFrame getHome() {
         return frame;
     }
