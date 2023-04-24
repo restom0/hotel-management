@@ -822,7 +822,7 @@ public class Home {
 
                     }
                 });
-
+                close();
                 frame.add(contentPanel,BorderLayout.CENTER);
                 frame.revalidate(); // Cập nhật lại giao diện
                 frame.repaint();
@@ -848,10 +848,21 @@ public class Home {
         }
     }
 
-    public void refresh() {
+    public boolean refresh() {
+        return close();
         //model.setRowCount(0);
         //HotelManagementSystem.getRooms().forEach(room -> {
         //    model.addRow(new Object[]{room.getRoomNumber(), room.getRoomType(), room.getPrice()});
         //});
     }
+    public boolean close() {
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                // xử lý sự kiện khi đóng cửa sổ
+                System.exit(0); // kết thúc ứng dụng
+            }
+        });
+        return true;
+    }
+
 }
