@@ -5,9 +5,11 @@ import javax.swing.*;
 //import javax.swing.table.*;
 public class LoginUI {
     private JFrame frame;
+    private Authenticate auth;
     //private JTable table;
     //private DefaultTableModel model;
     public LoginUI() {
+        auth = new Authenticate();
         createLoginUI();
     }
     private void createLoginUI() {
@@ -40,6 +42,13 @@ public class LoginUI {
         addButton_Login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String username = userNameField.getText();
+                String password = new String(passwordField.getText());
+                boolean isAuthenticated = auth.checkLogin(username, password);
+                if (!isAuthenticated) {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password.");
+                    return;
+                }
                 Home HomeUI = new Home();
                 frame.setVisible(false);
                 HomeUI.refresh();
