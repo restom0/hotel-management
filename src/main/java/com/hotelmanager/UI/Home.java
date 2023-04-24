@@ -850,16 +850,16 @@ public class Home {
 
     public boolean refresh() {
         return close();
-        //model.setRowCount(0);
-        //HotelManagementSystem.getRooms().forEach(room -> {
-        //    model.addRow(new Object[]{room.getRoomNumber(), room.getRoomType(), room.getPrice()});
-        //});
     }
     public boolean close() {
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 // xử lý sự kiện khi đóng cửa sổ
-                System.exit(0); // kết thúc ứng dụng
+                int result = JOptionPane.showConfirmDialog(frame, "Bạn có chắc muốn đóng ứng dụng?", "Xác nhận đóng ứng dụng", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    // giải phóng các tài nguyên của cửa sổ
+                    System.exit(0); // kết thúc ứng dụng
+                }
             }
         });
         return true;
