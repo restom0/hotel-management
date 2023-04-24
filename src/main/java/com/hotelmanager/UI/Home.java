@@ -212,6 +212,21 @@ public class Home {
                 addMoreButton.setHorizontalTextPosition(SwingConstants.CENTER);
                 addMoreButton.setVerticalTextPosition(SwingConstants.BOTTOM);
                 
+                Object[] columnNames_dataExtras = {"Type", "Name", "Qty"};
+                Object[][] dataExtras = {
+                        // {"Food", "Bun", "2"},
+                        // {"Food", "Com", "3"},
+                        // {"Food", "Nuoc", "4"},
+                        // {"Food", "Pho", "5"},
+                        // {"Food", "Mi", "6"}
+                };
+
+                DefaultTableModel model_dataExtras = new DefaultTableModel(dataExtras, columnNames_dataExtras);
+
+                JTable table_dataExtras = new JTable(model_dataExtras);
+                table_dataExtras.setEnabled(false);
+
+
                 addMoreButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -232,7 +247,7 @@ public class Home {
 
                         constraints.gridx = 0;
                         constraints.gridy = 1;
-                        String[] options_Type_addMore = {"Option 1", "Option 2", "Option 3"};
+                        String[] options_Type_addMore = {"Food", "Drink"};
                         JComboBox<String> dropdown_Type_addMore = new JComboBox<>(options_Type_addMore);
 
                         contentPanel_addMore_Main.add(dropdown_Type_addMore, constraints);
@@ -275,8 +290,17 @@ public class Home {
                         finish_contentPanel_addMoreButton.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
+                                if (quantity_addMoreField.getText().isEmpty()) {
+                                    JOptionPane.showMessageDialog(frame, "Please enter a quantity");
+                                    return;
+                                }
+                                DefaultTableModel model = (DefaultTableModel) table_dataExtras.getModel();
+                                Object[] newRowData = { dropdown_Type_addMore.getSelectedItem().toString(), "Bun bo", quantity_addMoreField.getText()};
+                                model.addRow(newRowData);
+                                table_dataExtras.repaint();
+
                                 //Cập nhật dữ liệu tại đây
-                                JOptionPane.showMessageDialog(frame, "??? added successfully!");
+                                JOptionPane.showMessageDialog(frame, "Extras added successfully!");
                                 subFrame_addMore.setVisible(false);
                             }
                         });
@@ -301,19 +325,6 @@ public class Home {
                 addMorePanel.add(addMoreButton);
                 bookPanel_left_top.add(addMorePanel, constraints);
 
-                Object[] columnNames_dataExtras = {"Type", "Name", "Price"};
-                Object[][] dataExtras = {
-                        {"Single", "101", "200 000"},
-                        {"Double", "221", "300 000"},
-                        {"Single", "217", "150 000"},
-                        {"Single", "602", "180 000"},
-                        {"Double", "779", "350 000"}
-                };
-
-                DefaultTableModel model_dataExtras = new DefaultTableModel(dataExtras, columnNames_dataExtras);
-                JTable table_dataExtras = new JTable(model_dataExtras);
-                table_dataExtras.setEnabled(false);
-
                 JScrollPane bookPanel_left_bot = new JScrollPane(table_dataExtras);
                 bookPanel_left_bot.setBackground(Color.LIGHT_GRAY);
                 table_dataExtras.setFillsViewportHeight(false);
@@ -321,6 +332,13 @@ public class Home {
                 bookPanel_left.add(bookPanel_left_top,BorderLayout.NORTH);
                 bookPanel_left.add(bookPanel_left_bot,BorderLayout.CENTER);
                 //Create bookPanel_right
+
+                JPanel bookPanel_right = new JPanel(new BorderLayout());
+
+                JLabel roomAlbLabel = new JLabel("Available Room");
+                roomAlbLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                bookPanel_right.add(roomAlbLabel, BorderLayout.NORTH);
+
                 Object[] columnNames_dataRoomAlb = {"Type", "Name", "Price"};
                 Object[][] dataRoomAlb = {
                         {"Single", "101", "200 000"},
@@ -333,9 +351,10 @@ public class Home {
                 DefaultTableModel model_dataRoomAlb = new DefaultTableModel(dataRoomAlb, columnNames_dataRoomAlb);
                 JTable table_dataRoomAlb = new JTable(model_dataRoomAlb);
                 table_dataRoomAlb.setEnabled(false);
-
-                JScrollPane bookPanel_right = new JScrollPane(table_dataRoomAlb);
                 table_dataRoomAlb.setFillsViewportHeight(true);
+
+                JScrollPane tableroomAlbScrollPane = new JScrollPane(table_dataRoomAlb);
+                bookPanel_right.add(tableroomAlbScrollPane, BorderLayout.CENTER);
                 
                 JSplitPane bookPanel_Main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bookPanel_left, bookPanel_right);
                 bookPanel_Main.setOneTouchExpandable(true);
@@ -629,13 +648,13 @@ public class Home {
                         addMorePanel.add(addMoreButton);
                         bookPanel_left_top.add(addMorePanel, constraints);
         
-                        Object[] columnNames_dataExtras = {"Type", "Name", "Price"};
+                        Object[] columnNames_dataExtras = {"Type", "Name", "Qty"};
                         Object[][] dataExtras = {
-                                {"Single", "101", "200 000"},
-                                {"Double", "221", "300 000"},
-                                {"Single", "217", "150 000"},
-                                {"Single", "602", "180 000"},
-                                {"Double", "779", "350 000"}
+                                // {"Food", "Bun", "2"},
+                                // {"Food", "Com", "3"},
+                                // {"Food", "My", "1"},
+                                // {"Food", "Pho", "1"},
+                                // {"Food", "Chao", "3"}
                         };
         
                         DefaultTableModel model_dataExtras = new DefaultTableModel(dataExtras, columnNames_dataExtras);
@@ -648,7 +667,15 @@ public class Home {
                         
                         bookPanel_left.add(bookPanel_left_top,BorderLayout.NORTH);
                         bookPanel_left.add(bookPanel_left_bot,BorderLayout.CENTER);
+                        
                         //Create bookPanel_right
+
+                        JPanel bookPanel_right = new JPanel(new BorderLayout());
+
+                        JLabel roomAlbLabel = new JLabel("Available Room");
+                        roomAlbLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                        bookPanel_right.add(roomAlbLabel, BorderLayout.NORTH);
+
                         Object[] columnNames_dataRoomAlb = {"Type", "Name", "Price"};
                         Object[][] dataRoomAlb = {
                                 {"Single", "101", "200 000"},
@@ -661,9 +688,10 @@ public class Home {
                         DefaultTableModel model_dataRoomAlb = new DefaultTableModel(dataRoomAlb, columnNames_dataRoomAlb);
                         JTable table_dataRoomAlb = new JTable(model_dataRoomAlb);
                         table_dataRoomAlb.setEnabled(false);
-        
-                        JScrollPane bookPanel_right = new JScrollPane(table_dataRoomAlb);
                         table_dataRoomAlb.setFillsViewportHeight(true);
+
+                        JScrollPane tableroomAlbScrollPane = new JScrollPane(table_dataRoomAlb);
+                        bookPanel_right.add(tableroomAlbScrollPane, BorderLayout.CENTER);
                         
                         JSplitPane bookPanel_Main = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bookPanel_left, bookPanel_right);
                         bookPanel_Main.setOneTouchExpandable(true);
@@ -717,6 +745,81 @@ public class Home {
                 frame.repaint();
             }
         });
+        checkoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                contentPanel.remove(SOUTHpanel);
+                SOUTHpanel.removeAll();
+
+                JPanel editPanel = new JPanel(new BorderLayout());
+                JPanel NORTHdeitPanel = new JPanel(new BorderLayout());
+                JPanel SOUTHeditPanel = new JPanel(new GridLayout(1,2));
+                SOUTHeditPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                JPanel SOUTH_left_editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                JPanel SOUTH_right_editPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+                String[] columnsEdit = {"ID", "Customer Name", "Room", "Checkin Date"};
+                Object[][] dataEdit = {
+                    {1, "John", 25, "11"},
+                    {2, "Sarah", 30,"12"},
+                    {3, "Tom", 20,"13"}
+                };
+                DefaultTableModel modelEdit =  new DefaultTableModel(dataEdit, columnsEdit);
+                
+                JTable tableEdit = new JTable(modelEdit);
+                tableEdit.setDefaultEditor(Object.class, null);
+                tableEdit.getTableHeader().setReorderingAllowed(false);
+                tableEdit.setRowSelectionAllowed(true);
+                tableEdit.setColumnSelectionAllowed(false);
+
+                JScrollPane scrollPaneEdit = new JScrollPane(tableEdit);
+                scrollPaneEdit.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+
+                JButton editEditButton = new JButton("Checkout");
+                JButton cancelEditButton = new JButton("Cancel");
+
+                NORTHdeitPanel.add(scrollPaneEdit,BorderLayout.NORTH);
+                SOUTH_right_editPanel.add(editEditButton);
+                SOUTH_left_editPanel.add(cancelEditButton);
+                SOUTHeditPanel.add(SOUTH_left_editPanel);
+                SOUTHeditPanel.add(SOUTH_right_editPanel);
+                editPanel.add(NORTHdeitPanel,BorderLayout.CENTER);
+                editPanel.add(SOUTHeditPanel,BorderLayout.SOUTH);
+                SOUTHpanel.add(editPanel, BorderLayout.CENTER);
+                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+
+                cancelEditButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        contentPanel.remove(SOUTHpanel);
+                        SOUTHpanel.removeAll();
+
+                        contentPanel.add(SOUTHpanel);
+                        contentPanel.revalidate();
+                        contentPanel.repaint();
+
+                    }
+                });
+
+                editEditButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int rowtableEdit = tableEdit.getSelectedRow();
+                        if (rowtableEdit == -1) {
+                            JOptionPane.showMessageDialog(null, "Please select 1 item");
+                            return;
+                        }
+                    }
+                });
+
+                frame.add(contentPanel,BorderLayout.CENTER);
+                frame.revalidate(); // Cập nhật lại giao diện
+                frame.repaint();
+            }
+        });
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -731,28 +834,65 @@ public class Home {
                 JPanel searchPanel_Top = new JPanel(new FlowLayout());
                 JPanel searchPanel_Main = new JPanel(new BorderLayout());
                 
+                String[] columnsSrch = {"ID", "Customer Name", "Room", "Checkin Date"};
+                Object[][] dataSrch = {
+                    {1, "John", 25, "11"},
+                    {2, "Sarah", 30,"12"},
+                    {3, "Tom", 20,"13"}
+                };
+                DefaultTableModel modelSrch =  new DefaultTableModel(dataSrch, columnsSrch);
+                
+                JTable tableSrch = new JTable(modelSrch);
+                tableSrch.setDefaultEditor(Object.class, null);
+                tableSrch.getTableHeader().setReorderingAllowed(false);
+                tableSrch.setRowSelectionAllowed(true);
+                tableSrch.setColumnSelectionAllowed(false);
+
+                JScrollPane scrollPaneSrch = new JScrollPane(tableSrch);
+                scrollPaneSrch.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
                 JButton cancelSearchButton = new JButton("Cancel");
                 searchJPanel_Footer.add(cancelSearchButton);
                 
 
                 JLabel searchJLabel = new JLabel("Search:");
                 JTextField searchField = new JTextField(20);
-                String[] options_Type_search = {"Option 1", "Option 2", "Option 3"};
+                String[] options_Type_search = {"All", "Room", "Customers","Extras"};
                 JComboBox<String> dropdown_Type_search = new JComboBox<>(options_Type_search);
                 searchField.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         String query = searchField.getText();
-                        
+                        if (searchField.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(frame, "Please enter a quantity");
+                            return;
+                        }
+                        DefaultTableModel model = (DefaultTableModel) tableSrch.getModel();
+                        Object[] newRowData = { dropdown_Type_search.getSelectedItem().toString(), "Bun bo", searchField.getText()};
+                        //model.addRow(newRowData);
+                        tableSrch.repaint();
                     }
                 });
             
                 searchPanel_Top.add(searchJLabel);
                 searchPanel_Top.add(searchField);
                 searchPanel_Top.add(dropdown_Type_search);
+                searchPanel_Main.add(scrollPaneSrch);
 
                 searchPanel.add(searchJPanel_Footer, BorderLayout.SOUTH);
                 searchPanel.add(searchPanel_Main, BorderLayout.CENTER);
                 searchPanel.add(searchPanel_Top, BorderLayout.NORTH);
+
+                cancelSearchButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        contentPanel.remove(SOUTHpanel);
+                        SOUTHpanel.removeAll();
+
+                        contentPanel.add(SOUTHpanel);
+                        contentPanel.revalidate();
+                        contentPanel.repaint();
+                    }
+                });
 
                 SOUTHpanel.add(searchPanel,BorderLayout.CENTER);
                 contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
@@ -781,11 +921,11 @@ public class Home {
                 JPanel SOUTH_left_logPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
                 JPanel SOUTH_right_logPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-                String[] columnslog = {"ID", "Customer Name", "Room", "Checkin Date"};
+                String[] columnslog = {"ID", "Description", "Date"};
                 Object[][] datalog = {
-                    {1, "John", 25, "11"},
-                    {2, "Sarah", 30,"12"},
-                    {3, "Tom", 20,"13"}
+                    {1, "Booked a room", "22-11-2022"},
+                    {2, "Checked out","23-11-2022"},
+                    {3, "Checked out","24-11-2022"}
                 };
                 DefaultTableModel modellog =  new DefaultTableModel(datalog, columnslog);
                 
@@ -860,6 +1000,7 @@ public class Home {
                     // giải phóng các tài nguyên của cửa sổ
                     System.exit(0); // kết thúc ứng dụng
                 }
+                else return;
             }
         });
         return true;
