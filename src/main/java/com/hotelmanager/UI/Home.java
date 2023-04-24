@@ -46,7 +46,7 @@ public class Home {
         userNameLabel.setVerticalAlignment(JLabel.CENTER);
         top_NORTHpanel_Right.add(userNameLabel);
 
-        ImageIcon logOutButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/logOutButton/logOut_icon.png");
+        ImageIcon logOutButton_icon = new ImageIcon("src/main/resources/logOut_icon.png");
         JButton logOutButton = new JButton("LogOut", logOutButton_icon);
         logOutButton.setPreferredSize(new Dimension(102, 20));
         logOutButton.setContentAreaFilled(false);
@@ -77,33 +77,33 @@ public class Home {
             new EmptyBorder(10, 10, 10, 10)
         ));
         bot_NORTHpanel.setLayout(new GridLayout(0, 7));
-        ImageIcon bookButton_icon = new ImageIcon("hotel-management/src/main/resources/book_icon.png");
+        ImageIcon bookButton_icon = new ImageIcon("src/main/resources/book_icon.png");
         JButton bookButton = new JButton("Book",bookButton_icon);
 
         bookButton.setContentAreaFilled(false);
         bookButton.setFocusPainted(false);
 
-        ImageIcon editButton_icon = new ImageIcon("hotel-management/src/main/resources/edit_icon.png");
+        ImageIcon editButton_icon = new ImageIcon("src/main/resources/edit_icon.png");
         JButton ediButton = new JButton("Edit",editButton_icon);
         ediButton.setContentAreaFilled(false);
         ediButton.setFocusPainted(false);
 
-        ImageIcon checkoutButton_icon = new ImageIcon("hotel-management/src/main/resources/checkout_icon.png");
+        ImageIcon checkoutButton_icon = new ImageIcon("src/main/resources/checkout_icon.png");
         JButton checkoutButton = new JButton("Checkout",checkoutButton_icon);
         checkoutButton.setContentAreaFilled(false);
         checkoutButton.setFocusPainted(false);
 
-        ImageIcon searchButton_icon = new ImageIcon("hotel-management/src/main/resources/search_icon.png");
+        ImageIcon searchButton_icon = new ImageIcon("src/main/resources/search_icon.png");
         JButton searchButton = new JButton("Search",searchButton_icon);
         searchButton.setContentAreaFilled(false);
         searchButton.setFocusPainted(false);
 
-        ImageIcon propertyButton_icon = new ImageIcon("hotel-management/src/main/resources/property_icon.png");
+        ImageIcon propertyButton_icon = new ImageIcon("src/main/resources/property_icon.png");
         JButton propertybButton = new JButton("Property",propertyButton_icon);
         propertybButton.setContentAreaFilled(false);
         propertybButton.setFocusPainted(false);
 
-        ImageIcon logButton_icon = new ImageIcon("hotel-management/src/main/resources/log_icon.png");
+        ImageIcon logButton_icon = new ImageIcon("src/main/resources/log_icon.png");
         JButton logButton = new JButton("Log",logButton_icon);
         logButton.setContentAreaFilled(false);
         logButton.setFocusPainted(false);
