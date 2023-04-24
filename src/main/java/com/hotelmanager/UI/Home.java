@@ -1,4 +1,5 @@
 package com.hotelmanager.UI;
+
 import java.awt.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -6,12 +7,15 @@ import java.awt.event.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
+import com.hotelmanager.data.*;
 
 public class Home {
     private JFrame frame;
     //private JTable table;
     //private DefaultTableModel model;
+    private Database Tuan;
     public Home() {
+        Tuan = new Database(null, null, null, null);
         createHomeUI();
     }
     private void createHomeUI() {
@@ -42,7 +46,7 @@ public class Home {
         userNameLabel.setVerticalAlignment(JLabel.CENTER);
         top_NORTHpanel_Right.add(userNameLabel);
 
-        ImageIcon logOutButton_icon = new ImageIcon("src/main/resources/logOut_icon.png");
+        ImageIcon logOutButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/logOutButton/logOut_icon.png");
         JButton logOutButton = new JButton("LogOut", logOutButton_icon);
         logOutButton.setPreferredSize(new Dimension(102, 20));
         logOutButton.setContentAreaFilled(false);
@@ -73,33 +77,33 @@ public class Home {
             new EmptyBorder(10, 10, 10, 10)
         ));
         bot_NORTHpanel.setLayout(new GridLayout(0, 7));
-        ImageIcon bookButton_icon = new ImageIcon("src/main/resources/book_icon.png");
+        ImageIcon bookButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/bookButton/book_icon.png");
         JButton bookButton = new JButton("Book",bookButton_icon);
 
         bookButton.setContentAreaFilled(false);
         bookButton.setFocusPainted(false);
 
-        ImageIcon editButton_icon = new ImageIcon("src/main/resources/edit_icon.png");
+        ImageIcon editButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/editButton/edit_icon.png");
         JButton ediButton = new JButton("Edit",editButton_icon);
         ediButton.setContentAreaFilled(false);
         ediButton.setFocusPainted(false);
 
-        ImageIcon checkoutButton_icon = new ImageIcon("src/main/resources/checkout_icon.png");
+        ImageIcon checkoutButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/checkoutButton/checkout_icon.png");
         JButton checkoutButton = new JButton("Checkout",checkoutButton_icon);
         checkoutButton.setContentAreaFilled(false);
         checkoutButton.setFocusPainted(false);
 
-        ImageIcon searchButton_icon = new ImageIcon("src/main/resources/search_icon.png");
+        ImageIcon searchButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/searchButton/search_icon.png");
         JButton searchButton = new JButton("Search",searchButton_icon);
         searchButton.setContentAreaFilled(false);
         searchButton.setFocusPainted(false);
 
-        ImageIcon propertyButton_icon = new ImageIcon("src/main/resources/property_icon.png");
+        ImageIcon propertyButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/propertyButton/property_icon.png");
         JButton propertybButton = new JButton("Property",propertyButton_icon);
         propertybButton.setContentAreaFilled(false);
         propertybButton.setFocusPainted(false);
 
-        ImageIcon logButton_icon = new ImageIcon("src/main/resources/log_icon.png");
+        ImageIcon logButton_icon = new ImageIcon("Hotel_Manager_App/FE/Image/logButton/log_icon.png");
         JButton logButton = new JButton("Log",logButton_icon);
         logButton.setContentAreaFilled(false);
         logButton.setFocusPainted(false);
@@ -691,11 +695,12 @@ public class Home {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 // Lấy dữ liệu ở đây 
+                                JOptionPane.showMessageDialog(frame, "Customer edit successfully!");
                                 contentPanel.remove(SOUTHpanel);
                                 SOUTHpanel.removeAll();
+                                SOUTHpanel.add(editPanel);
                                 contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
                                 
-                                JOptionPane.showMessageDialog(frame, "Customer edit successfully!");
                                 contentPanel.revalidate();
                                 contentPanel.repaint();
                             }
@@ -756,6 +761,68 @@ public class Home {
 
                 contentPanel.revalidate();
                 contentPanel.repaint();
+                frame.add(contentPanel,BorderLayout.CENTER);
+                frame.revalidate(); // Cập nhật lại giao diện
+                frame.repaint();
+            }
+        });
+        logButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                contentPanel.remove(SOUTHpanel);
+                SOUTHpanel.removeAll();
+
+                JPanel logPanel = new JPanel(new BorderLayout());
+                JPanel NORTHlogPanel = new JPanel(new BorderLayout());
+                JPanel SOUTHlogPanel = new JPanel(new GridLayout(1,2));
+                SOUTHlogPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                JPanel SOUTH_left_logPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                JPanel SOUTH_right_logPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+                String[] columnslog = {"ID", "Customer Name", "Room", "Checkin Date"};
+                Object[][] datalog = {
+                    {1, "John", 25, "11"},
+                    {2, "Sarah", 30,"12"},
+                    {3, "Tom", 20,"13"}
+                };
+                DefaultTableModel modellog =  new DefaultTableModel(datalog, columnslog);
+                
+                JTable tablelog = new JTable(modellog);
+                tablelog.setDefaultEditor(Object.class, null);
+                tablelog.getTableHeader().setReorderingAllowed(false);
+                tablelog.setRowSelectionAllowed(true);
+                tablelog.setColumnSelectionAllowed(false);
+
+                JScrollPane scrollPanelog = new JScrollPane(tablelog);
+                scrollPanelog.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+
+                JButton cancellogButton = new JButton("Cancel");
+
+                NORTHlogPanel.add(scrollPanelog,BorderLayout.NORTH);
+                SOUTH_left_logPanel.add(cancellogButton);
+                SOUTHlogPanel.add(SOUTH_left_logPanel);
+                SOUTHlogPanel.add(SOUTH_right_logPanel);
+                logPanel.add(NORTHlogPanel,BorderLayout.CENTER);
+                logPanel.add(SOUTHlogPanel,BorderLayout.SOUTH);
+                SOUTHpanel.add(logPanel, BorderLayout.CENTER);
+                contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
+
+                cancellogButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        contentPanel.remove(SOUTHpanel);
+                        SOUTHpanel.removeAll();
+
+                        contentPanel.add(SOUTHpanel);
+                        contentPanel.revalidate();
+                        contentPanel.repaint();
+
+                    }
+                });
+
                 frame.add(contentPanel,BorderLayout.CENTER);
                 frame.revalidate(); // Cập nhật lại giao diện
                 frame.repaint();
