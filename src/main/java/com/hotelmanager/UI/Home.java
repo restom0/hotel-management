@@ -13,9 +13,9 @@ public class Home {
     private JFrame frame;
     //private JTable table;
     //private DefaultTableModel model;
-    private Database Tuan;
+    private Database database;
     public Home() {
-        Tuan = new Database(null, null, null, null);
+        database = new Database(null, null, null, null);
         createHomeUI();
     }
     private void createHomeUI() {
@@ -382,7 +382,25 @@ public class Home {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Lấy dữ liệu ở đây 
-
+                        
+                        String customerName = customerNameField.getText();
+                        String phoneNumber = phoneNumberField.getText();
+                        String ID = IDField.getText();
+                        String room = roomField.getText();
+                        if (customerName.isEmpty() || phoneNumber.isEmpty() || ID.isEmpty() || room.isEmpty()) {
+                            JOptionPane.showMessageDialog(frame, "Please fill in all fields!");
+                            return;
+                        } else {
+                            if (database.searchFreeRoom(room) == null) {
+                                JOptionPane.showMessageDialog(frame, "Room is not exist");
+                            } else {
+                                JOptionPane.showMessageDialog(frame, "Room has been booked successfully");
+                                Room searchedRoom = database.searchFreeRoom(room);
+                                database.removeFreeRoom(searchedRoom);
+                                database.addBookedRoom(
+                                        new BookedRoom(new Customer(customerName, phoneNumber, ID), searchedRoom));
+                            }
+                        }
                         contentPanel.remove(SOUTHpanel);
                         SOUTHpanel.removeAll();
                         contentPanel.add(SOUTHpanel,BorderLayout.CENTER);
@@ -392,7 +410,7 @@ public class Home {
                         contentPanel.repaint();
                     }
                 });
-
+                
                 frame.add(contentPanel,BorderLayout.CENTER);
                 frame.revalidate(); // Cập nhật lại giao diện
                 frame.repaint();
